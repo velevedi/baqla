@@ -1,0 +1,51 @@
+{
+  "id": "find-ready-to-run-tasks-test",
+  "version": "0.0.1",
+  "documentation": "e = (a + b) * d",
+  "tasks": [
+    {
+      "task": "a",
+      "serviceName": "a",
+      "input": [],
+      "output": [
+        "c"
+      ]
+    },
+    {
+      "task": "b",
+      "serviceName": "b",
+      "input": [],
+      "output": [
+        "c"
+      ]
+    },
+    {
+      "task": "c",
+      "serviceName": "sum",
+      "input": [
+        "a",
+        "b"
+      ],
+      "output": [
+        "e"
+      ]
+    },
+    {
+      "task": "d",
+      "serviceName": "d",
+      "input": [],
+      "output": [
+        "e"
+      ]
+    },
+    {
+      "task": "e",
+      "serviceName": "mul",
+      "input": [
+        "c",
+        "d"
+      ],
+      "output": []
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": "simple formula",
+  "version": "0.0.1",
+  "documentation": "y = a + b",
+  "tasks": [
+    {
+      "task": "a",
+      "serviceName": "a",
+      "input": [],
+      "output": [
+        "sum"
+      ]
+    },
+    {
+      "task": "b",
+      "serviceName": "b",
+      "input": [],
+      "output": [
+        "sum"
+      ]
+    },
+    {
+      "task": "sum",
+      "serviceName": "sum",
+      "input": [
+        "a",
+        "b"
+      ],
+      "output": []
+    }
+  ]
+}
