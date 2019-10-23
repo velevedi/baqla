@@ -23,22 +23,20 @@ import com.velevedi.baqla.Filter;
 import com.velevedi.baqla.Log;
 import com.velevedi.baqla.simple.ArrayLog;
 import com.velevedi.baqla.simple.LogEntry;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
 
 import static java.util.stream.Collectors.toMap;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  */
-public class LatestValuesForTasksFilterTest {
+class LatestValuesForTasksFilterTest {
 
     @Test
-    public void testComplete() throws Exception {
+    void testComplete() {
         Log log = new ArrayLog(10);
 
         log.add(
@@ -66,21 +64,21 @@ public class LatestValuesForTasksFilterTest {
                 LogEntry.newBuilder().id(log.nextEntryId()).taskId("B").payload(3L).build()
         );
 
-        assertThat(log.size(), is(8));
+        assertEquals(log.size(), 8);
 
         List<Entry> entries = log.find(new LatestValuesForTasksFilter("A", "B"));
 
-        assertThat(entries.size(), is(2));
+        assertEquals(entries.size(), 2);
 
         Map<String, Entry> entriesAsMap = entries.stream().
                 collect(toMap(Entry::taskId, entry -> entry));
 
-        assertThat(entriesAsMap.get("A").payload(), is(5L));
-        assertThat(entriesAsMap.get("B").payload(), is(3L));
+        assertEquals(entriesAsMap.get("A").payload(), 5L);
+        assertEquals(entriesAsMap.get("B").payload(), 3L);
     }
 
     @Test
-    public void testNullEntry() throws Exception {
+    void testNullEntry() {
         Filter filter = new LatestValuesForTasksFilter();
         assertFalse(filter.test(null));
     }

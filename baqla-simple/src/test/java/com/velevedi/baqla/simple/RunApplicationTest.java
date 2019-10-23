@@ -24,20 +24,21 @@ import com.velevedi.baqla.simple.service.Constant;
 import com.velevedi.baqla.simple.service.Sub;
 import com.velevedi.baqla.simple.service.Sum;
 import com.velevedi.baqla.simple.util.ClassloaderResourceLocator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Files;
 import java.util.List;
 import java.util.Set;
 
-import static java.util.stream.Collectors.toSet;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class RunApplicationTest {
+import static java.util.stream.Collectors.toSet;
+
+
+class RunApplicationTest {
 
     @Test
-    public void runApplicationWithArrayLog() throws Exception {
+    void runApplicationWithArrayLog() throws Exception {
 
         Registry registry = new PojoRegistry().
                 register("a", new Constant(2L)).
@@ -59,15 +60,15 @@ public class RunApplicationTest {
                 collect(toSet());
         List<Entry> results = log.find(new LatestValuesForTasksFilter(resultTasks));
 
-        assertThat(results.size(), is(1));
-        assertThat(results.get(0).payload(), is(5.0));
+        assertEquals(results.size(), 1);
+        assertEquals(results.get(0).payload(), 5.0);
     }
 
     /**
      * Different Log implementation but result calculated is the same
      */
     @Test
-    public void runApplicationWithHashMapLog() throws Exception {
+    void runApplicationWithHashMapLog() throws Exception {
 
         Registry registry = new PojoRegistry().
                 register("a", new Constant(2L)).
@@ -89,15 +90,15 @@ public class RunApplicationTest {
                 collect(toSet());
         List<Entry> results = log.find(new LatestValuesForTasksFilter(resultTasks));
 
-        assertThat(results.size(), is(1));
-        assertThat(results.get(0).payload(), is(5.0));
+        assertEquals(results.size(), 1);
+        assertEquals(results.get(0).payload(), 5.0);
     }
 
     /**
      * Different Log implementation but result calculated is the same
      */
     @Test
-    public void runApplicationWithFileLog() throws Exception {
+    void runApplicationWithFileLog() throws Exception {
 
         Registry registry = new PojoRegistry().
                 register("a", new Constant(2L)).
@@ -119,13 +120,13 @@ public class RunApplicationTest {
                     collect(toSet());
             List<Entry> results = log.find(new LatestValuesForTasksFilter(resultTasks));
 
-            assertThat(results.size(), is(1));
-            assertThat(results.get(0).payload(), is(5.0));
+            assertEquals(results.size(), 1);
+            assertEquals(results.get(0).payload(), 5.0);
         }
     }
 
     @Test
-    public void reusingDataStore() throws Exception {
+    void reusingDataStore() throws Exception {
 
         Registry registry = new PojoRegistry().
                 register("a", new Constant(2L)).
@@ -153,8 +154,8 @@ public class RunApplicationTest {
                     collect(toSet());
             List<Entry> results1 = log.find(new LatestValuesForTasksFilter(resultTasksApp1));
 
-            assertThat(results1.size(), is(1));
-            assertThat(results1.get(0).payload(), is(5.0));
+            assertEquals(results1.size(), 1);
+            assertEquals(results1.get(0).payload(), 5.0);
 
             // Running application2
             executor.resubmit(application2, log).get();
@@ -164,8 +165,8 @@ public class RunApplicationTest {
                     collect(toSet());
             List<Entry> results2 = log.find(new LatestValuesForTasksFilter(resultTasksApp2));
 
-            assertThat(results2.size(), is(1));
-            assertThat(results2.get(0).payload(), is(-1.0));
+            assertEquals(results2.size(), 1);
+            assertEquals(results2.get(0).payload(), -1.0);
         }
     }
 

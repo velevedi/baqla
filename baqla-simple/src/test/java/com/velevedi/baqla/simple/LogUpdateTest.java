@@ -23,7 +23,7 @@ import com.velevedi.baqla.simple.filter.TaskIdFilter;
 import com.velevedi.baqla.simple.service.NullValue;
 import com.velevedi.baqla.simple.service.Sum;
 import com.velevedi.baqla.simple.util.ClassloaderResourceLocator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Files;
 import java.util.List;
@@ -33,15 +33,12 @@ import static com.velevedi.baqla.simple.util.NamingUtils.tasksToNames;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
 import static java.util.stream.Collectors.toSet;
-import static org.hamcrest.CoreMatchers.hasItems;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNot.not;
-import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class LogUpdateTest {
+class LogUpdateTest {
 
     @Test
-    public void reinitializeCalculation() throws Exception {
+    void reinitializeCalculation() throws Exception {
 
         Registry registry = new PojoRegistry().
                 register("a", new NullValue()).
@@ -60,7 +57,7 @@ public class LogUpdateTest {
 
         Set<Task> tasks = flow.readyToRunOn(log);
 
-        assertThat(tasksToNames(tasks), hasItems("a", "b"));
+        assertTrue(tasksToNames(tasks).containsAll(List.of("a", "b")));
 
         log.add(
                 LogEntry.newBuilder().
@@ -74,8 +71,8 @@ public class LogUpdateTest {
 
         tasks = flow.readyToRunOn(log);
 
-        assertThat(tasksToNames(tasks), hasItems("b"));
-        assertThat(tasksToNames(tasks), not(hasItems("a")));
+        assertTrue(tasksToNames(tasks).contains("b"));
+        assertFalse(tasksToNames(tasks).contains("a"));
 
         log.add(
                 LogEntry.newBuilder().
@@ -89,8 +86,8 @@ public class LogUpdateTest {
 
         tasks = flow.readyToRunOn(log);
 
-        assertThat(tasksToNames(tasks), hasItems("sum"));
-        assertThat(tasksToNames(tasks), not(hasItems("a", "b")));
+        assertTrue(tasksToNames(tasks).contains("sum"));
+        assertFalse(tasksToNames(tasks).containsAll(List.of("a", "b")));
 
         executor.resubmit(flow, log).get();
 
@@ -100,8 +97,8 @@ public class LogUpdateTest {
                         collect(toSet())
         ));
 
-        assertThat(results.size(), is(1));
-        assertThat(results.get(0).payload(), is(2.0));
+        assertEquals(results.size(), 1);
+        assertEquals(results.get(0).payload(), 2.0);
     }
 
 }

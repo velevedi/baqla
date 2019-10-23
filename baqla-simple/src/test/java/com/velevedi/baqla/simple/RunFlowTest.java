@@ -23,17 +23,16 @@ import com.velevedi.baqla.simple.service.Constant;
 import com.velevedi.baqla.simple.service.Multiply;
 import com.velevedi.baqla.simple.service.Sum;
 import com.velevedi.baqla.simple.util.ClassloaderResourceLocator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Files;
+import java.util.List;
 import java.util.Set;
 
 import static com.velevedi.baqla.simple.util.NamingUtils.tasksToNames;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
-import static org.hamcrest.CoreMatchers.hasItems;
-import static org.hamcrest.core.IsNot.not;
-import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class RunFlowTest {
 
@@ -85,7 +84,7 @@ public class RunFlowTest {
 
         Set<Task> tasks = flow.readyToRunOn(log);
 
-        assertThat(tasksToNames(tasks), hasItems("c"));
-        assertThat(tasksToNames(tasks), not(hasItems("a", "b", "d")));
+        assertTrue(tasksToNames(tasks).contains("c"));
+        assertFalse(tasksToNames(tasks).containsAll(List.of("a", "b", "d")));
     }
 }

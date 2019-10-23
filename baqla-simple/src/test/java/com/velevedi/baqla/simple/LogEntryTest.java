@@ -18,43 +18,40 @@
 
 package com.velevedi.baqla.simple;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static java.util.Collections.singleton;
 import static java.util.Collections.singletonMap;
-import static junit.framework.TestCase.assertFalse;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class LogEntryTest {
+class LogEntryTest {
 
     @Test
-    public void testCreation1() throws Exception {
+    void testCreation1() {
         LogEntry logEntry1 = LogEntry.newBuilder().id(1).taskId("sum").payload(123L).
                 build();
-        
+
         LogEntry logEntry2 = LogEntry.newBuilder().id(1).taskId("sum").payload(123L).
                 build();
 
-        assertTrue(logEntry1.equals(logEntry2));
-        assertTrue(logEntry1.hashCode() == logEntry2.hashCode());
+        assertEquals(logEntry1, logEntry2);
+        assertEquals(logEntry1.hashCode(), logEntry2.hashCode());
     }
 
     @Test
-    public void testCreation2() throws Exception {
+    void testCreation2() {
         LogEntry logEntry1 = LogEntry.newBuilder().id(1).taskId("sum").payload(123L).
                 build();
 
         LogEntry logEntry2 = LogEntry.newBuilder().id(2).taskId("sum").payload(123L).
                 build();
 
-        assertFalse(logEntry1.equals(logEntry2));
-        assertFalse(logEntry1.hashCode() == logEntry2.hashCode());
+        assertNotEquals(logEntry1, logEntry2);
+        assertNotEquals(logEntry1.hashCode(), logEntry2.hashCode());
     }
 
     @Test
-    public void testCreation3() throws Exception {
+    void testCreation3() {
         LogEntry logEntry = LogEntry.newBuilder().
                 id(1).
                 meta(singletonMap("key", "value")).
@@ -63,28 +60,34 @@ public class LogEntryTest {
                 inputIds(singleton("source")).
                 build();
 
-        assertThat(logEntry.id(), is(1L));
-        assertThat(logEntry.meta().size(), is(1));
-        assertThat(logEntry.meta().get("key"), is("value"));
-        assertThat(logEntry.taskId(), is("sum"));
-        assertThat(logEntry.payload(), is(123L));
-        assertThat(logEntry.inputIds().size(), is(1));
-        assertThat(logEntry.inputIds().iterator().next(), is("source"));
+        assertEquals(logEntry.id(), 1L);
+        assertEquals(logEntry.meta().size(), 1);
+        assertEquals(logEntry.meta().get("key"), "value");
+        assertEquals(logEntry.taskId(), "sum");
+        assertEquals(logEntry.payload(), 123L);
+        assertEquals(logEntry.inputIds().size(), 1);
+        assertEquals(logEntry.inputIds().iterator().next(), "source");
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testIncorrectCreation1() throws Exception {
-        LogEntry.newBuilder().id(1).build();
+    @Test
+    void testIncorrectCreation1() {
+        assertThrows(IllegalArgumentException.class,
+                () -> LogEntry.newBuilder().id(1).build()
+        );
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testIncorrectCreation2() throws Exception {
-        LogEntry.newBuilder().id(1).taskId("my task").build();
+    @Test
+    void testIncorrectCreation2() {
+        assertThrows(IllegalArgumentException.class,
+                () -> LogEntry.newBuilder().id(1).taskId("my task").build()
+        );
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testIncorrectCreation3() throws Exception {
-        LogEntry.newBuilder().id(1).payload("my data").build();
+    @Test
+    void testIncorrectCreation3() {
+        assertThrows(IllegalArgumentException.class,
+                () -> LogEntry.newBuilder().id(1).payload("my data").build()
+        );
     }
 
 }

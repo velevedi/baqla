@@ -22,95 +22,93 @@ import com.velevedi.baqla.Entry;
 import com.velevedi.baqla.Log;
 import com.velevedi.baqla.simple.filter.LatestValuesForTasksFilter;
 import com.velevedi.baqla.simple.filter.TaskIdFilter;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  */
-public class ArrayLogTest {
+class ArrayLogTest {
 
     @Test
-    public void testCreation() throws Exception {
+    void testCreation()  {
         Log log = new ArrayLog(10);
 
-        assertThat(log.id(), is(notNullValue()));
-        assertThat(log.size(), is(0));
+        assertNotNull(log.id());
+        assertEquals(log.size(), 0);
     }
 
     @Test
-    public void testIdGeneration() throws Exception {
+    void testIdGeneration() {
         Log log = new ArrayLog(10);
 
-        assertThat(log.size(), is(0));
+        assertEquals(log.size(), 0);
 
         long nextEntryId = log.nextEntryId();
 
-        assertThat(nextEntryId, is(0L));
-        assertThat(log.size(), is(0));
+        assertEquals(nextEntryId, 0L);
+        assertEquals(log.size(), 0);
 
         nextEntryId = log.nextEntryId();
 
-        assertThat(nextEntryId, is(1L));
-        assertThat(log.size(), is(0));
+        assertEquals(nextEntryId, 1L);
+        assertEquals(log.size(), 0);
 
         nextEntryId = log.nextEntryId();
 
-        assertThat(nextEntryId, is(2L));
-        assertThat(log.size(), is(0));
+        assertEquals(nextEntryId, 2L);
+        assertEquals(log.size(), 0);
 
         nextEntryId = log.nextEntryId();
 
-        assertThat(nextEntryId, is(3L));
-        assertThat(log.size(), is(0));
+        assertEquals(nextEntryId, 3L);
+        assertEquals(log.size(), 0);
     }
 
     @Test
-    public void testAddingEntries() throws Exception {
+    void testAddingEntries() {
         Log log = new ArrayLog(5);
 
         long entryId = log.nextEntryId();
 
-        assertThat(entryId, is(0L));
-        assertThat(log.size(), is(0));
+        assertEquals(entryId, 0L);
+        assertEquals(log.size(), 0);
 
         LogEntry entry1 = LogEntry.newBuilder().id(entryId).taskId("my task").payload(entryId).build();
         log.add(entry1);
-        assertThat(log.size(), is(1));
+        assertEquals(log.size(), 1);
 
         entryId = log.nextEntryId();
         LogEntry entry2 = LogEntry.newBuilder().id(entryId).taskId("my task").payload(entryId).build();
         log.add(entry2);
-        assertThat(entryId, is(1L));
-        assertThat(log.size(), is(2));
+        assertEquals(entryId, 1L);
+        assertEquals(log.size(), 2);
 
         entryId = log.nextEntryId();
         LogEntry entry3 = LogEntry.newBuilder().id(entryId).taskId("my task").payload(entryId).build();
         log.add(entry3);
-        assertThat(entryId, is(2L));
-        assertThat(log.size(), is(3));
+        assertEquals(entryId, 2L);
+        assertEquals(log.size(), 3);
 
         entryId = log.nextEntryId();
         LogEntry entry4 = LogEntry.newBuilder().id(entryId).taskId("my task").payload(entryId).build();
         log.add(entry4);
-        assertThat(entryId, is(3L));
-        assertThat(log.size(), is(4));
+        assertEquals(entryId, 3L);
+        assertEquals(log.size(), 4);
 
         entryId = log.nextEntryId();
         LogEntry entry5 = LogEntry.newBuilder().id(entryId).taskId("my task").payload(entryId).build();
         log.add(entry5);
-        assertThat(entryId, is(4L));
-        assertThat(log.size(), is(5));
+        assertEquals(entryId, 4L);
+        assertEquals(log.size(), 5);
     }
 
-    @Test (expected = ArrayIndexOutOfBoundsException.class)
-    public void testMaxLimitReached() throws Exception {
+    @Test
+    void testMaxLimitReached() {
         int size = 5;
         Log log = new ArrayLog(size);
 
@@ -122,11 +120,13 @@ public class ArrayLogTest {
 
         long entryId = log.nextEntryId();
         LogEntry entry = LogEntry.newBuilder().id(entryId).taskId("my task").payload(entryId).build();
-        log.add(entry); // exception
+        assertThrows(ArrayIndexOutOfBoundsException.class,
+                () -> log.add(entry)
+        );
     }
 
     @Test
-    public void testEqualsHashCode() throws Exception {
+    void testEqualsHashCode() {
         LogEntry entry = LogEntry.newBuilder().id(1L).taskId("my task").payload(1L).build();
 
         Log log1 = new ArrayLog(5);
@@ -135,15 +135,15 @@ public class ArrayLogTest {
         Log log2 = new ArrayLog(5);
         log2.add(entry);
 
-        assertFalse(log1.equals(log2));
-        assertFalse(log1.id().equals(log2.id()));
-        assertFalse(log1.hashCode() == log2.hashCode());
+        assertNotEquals(log1, log2);
+        assertNotEquals(log1.id(), log2.id());
+        assertNotEquals(log1.hashCode(), log2.hashCode());
 
-        assertTrue(log1.equals(log1));
+        assertEquals(log1, log1);
     }
 
     @Test
-    public void testFiltering() throws Exception {
+    void testFiltering() {
         Log log = new ArrayLog(10);
 
         for (int i = 0; i < 10; i++) {
@@ -160,11 +160,11 @@ public class ArrayLogTest {
 
         List<Entry> entries = log.find(new TaskIdFilter(tasks));
 
-        assertThat(entries.size(), is(3));
+        assertEquals(entries.size(), 3);
     }
 
     @Test
-    public void testCopyTo() throws Exception {
+    void testCopyTo() {
         Log log = new ArrayLog(10);
 
         for (int i = 0; i < 10; i++) {
@@ -178,15 +178,15 @@ public class ArrayLogTest {
         tasks.add("task5");
 
         Log newLog = new ArrayLog(7);
-        assertThat(newLog.size(), is(0));
+        assertEquals(newLog.size(), 0);
 
         log.copyTo(newLog, new TaskIdFilter(tasks));
 
-        assertThat(newLog.size(), is(1));
+        assertEquals(newLog.size(), 1);
     }
 
     @Test
-    public void testForkAllTasksDifferent() throws Exception {
+    void testForkAllTasksDifferent() {
         Log source = new ArrayLog(100);
 
         for (int i = 0; i < 10; i++) {
@@ -196,17 +196,17 @@ public class ArrayLogTest {
             );
         }
 
-        assertThat(source.size(), is(10));
+        assertEquals(source.size(), 10);
 
         Log fork = source.fork();
 
-        assertThat(source.id(), is(fork.parent()));
+        assertEquals(source.id(), fork.parent());
 
-        assertThat(source.size(), is(fork.size()));
+        assertEquals(source.size(), fork.size());
     }
 
     @Test
-    public void testForkOneTask() throws Exception {
+    void testForkOneTask() {
         Log source = new ArrayLog(100);
 
         for (int i = 0; i < 10; i++) {
@@ -215,16 +215,16 @@ public class ArrayLogTest {
             );
         }
 
-        assertThat(source.size(), is(10));
+        assertEquals(source.size(), 10);
 
         Log fork = source.fork();
 
-        assertThat(source.id(), is(fork.parent()));
+        assertEquals(source.id(), fork.parent());
 
-        assertThat(fork.size(), is(1));
+        assertEquals(fork.size(), 1);
 
         List<Entry> entries = fork.find(new LatestValuesForTasksFilter("task"));
-        assertThat(entries.iterator().next().payload(), is(9));
+        assertEquals(entries.iterator().next().payload(), 9);
     }
 
 }
