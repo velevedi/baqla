@@ -11,7 +11,7 @@ The framework is designed with developers in mind allowing easy integration with
 ## Latest Release
 The most recent release is
 
-Requires Java version 8 or higher.
+Requires Java version 12 or higher.
 
 ## Modules
 
