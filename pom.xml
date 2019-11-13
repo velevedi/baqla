@@ -27,6 +27,26 @@
 
     <packaging>pom</packaging>
 
+    <description>
+        Baqla is a micro services orchestration framework that allows simultaneous evolution of the data as
+        well as software part of a system.
+    </description>
+    <url>https://github.com/velevedi/baqla</url>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://github.com/velevedi/baqla</url>
+        <connection>scm:git:git://github.com/velevedi/baqla.git</connection>
+        <developerConnection>scm:git:git@github.com:velevedi/baqla.git</developerConnection>
+    </scm>
+
     <properties>
         <revision>0.0.1-SNAPSHOT</revision>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -68,7 +88,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.1.1</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
