@@ -23,7 +23,7 @@
 
     <groupId>com.velevedi.baqla</groupId>
     <artifactId>baqla-parent</artifactId>
-    <version>${revision}</version>
+    <version>0.0.2-SNAPSHOT</version>
 
     <name>baqla-parent</name>
 
@@ -59,7 +59,6 @@
     </scm>
 
     <properties>
-        <revision>0.0.2-SNAPSHOT</revision>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
