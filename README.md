@@ -1,4 +1,4 @@
-# Baqla: Modify the program not the data
+# Baqla: Data and software evolution made easy
 
 Baqla is a micro services orchestration framework where the data evolution can coexist with an application development.
 In a traditional way developers build an application first and manage the data it generates later.
