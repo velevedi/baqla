@@ -18,12 +18,14 @@
 
 package com.velevedi.baqla;
 
+import com.velevedi.baqla.log.Entry;
+
 import java.util.function.Predicate;
 
 /**
  * Evaluates entries available in the log.
  */
-public interface Filter extends Predicate<Entry> {
+public interface Filter<T> extends Predicate<Entry<T>> {
 
     /**
      * Log object can hold a lot of entries. When filter completes the search Log scanning stops.

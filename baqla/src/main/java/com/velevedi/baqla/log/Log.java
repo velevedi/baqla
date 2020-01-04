@@ -16,18 +16,20 @@
  *
  */
 
-package com.velevedi.baqla;
+package com.velevedi.baqla.log;
 
 import java.io.Closeable;
-import java.util.List;
+import java.util.Collection;
+import java.util.Map;
 import java.util.UUID;
+import java.util.function.Predicate;
 
 /**
  * Collects data for the running process. This interface is an abstraction of a data store.
  * Log data structure allows data insertions only. This interface allows multiple implementations depending
  * on a persistence requirements. It is up to the implementor to handle serialization and atomicity.
  */
-public interface Log extends Closeable, AutoCloseable {
+public interface Log<K, V> extends Collection<Log.Entry<K, V>>, Closeable {
 
     /**
      * Id of the Log
@@ -43,45 +45,39 @@ public interface Log extends Closeable, AutoCloseable {
     UUID parent();
 
     /**
-     * Each task calculation result ends up in the Log. Each result is wrapped using the Entry object.
-     * Each Entry object has id assigned to it. This id is unique within the Log.
-     * @return next id to use for an entry
-     * @see Entry
-     */
-    long nextEntryId();
-
-    /**
-     * Adds entry to the Log.
-     * @param entry entry to add
-     * @return true if operation was successful and false otherwise
-     */
-    boolean add(Entry entry);
-
-    /**
-     * Finds entries based on the filter provided.
-     * @param filter filter to search for required entries
-     * @return list of entries
-     */
-    List<Entry> find(Filter filter);
-
-    /**
      * Copies entries from this Log into another Log based on the filter provided.
      * @param toLog Log to copy data to
      * @param filter filter to search for required entries
      */
-    void copyTo(Log toLog, Filter filter);
+    void copyTo(Log<K, V> toLog, Predicate<Log.Entry<K, V>> filter);
 
     /**
      * Log can be forked to a new one. Existing data will be copied to the new Log.
      * Newly forked Log will be of the same type as the parent one.
      * @return new Log object with data copied form the parent Log object.
      */
-    Log fork();
+    Log<K, V> fork();
 
-    /**
-     * Number of entries in the Log
-     * @return number of entries
-     */
-    int size();
+
+
+    interface Entry<K, V> extends Map.Entry<K, V> {
+        /**
+         * Id of the task that created this entry to store in the Log
+         * @return task
+         */
+        String source();
+
+        /**
+         * Entry can expose meta information about it
+         * @return meta information about the payload object
+         */
+        Map<String, Object> meta();
+
+        @Override
+        default V setValue(V value) {
+            throw new UnsupportedOperationException("Attempt to change immutable data structure");
+        }
+    }
+
 
 }

@@ -18,6 +18,8 @@
 
 package com.velevedi.baqla;
 
+import com.velevedi.baqla.log.Log;
+
 import java.util.concurrent.Future;
 
 /**
