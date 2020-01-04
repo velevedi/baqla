@@ -1,4 +1,4 @@
-# Baqla: Modify the program not the data
+# Baqla: Data and Software Evolution
 
 Baqla is a micro services orchestration framework where the data evolution can coexist with an application development.
 In a traditional way developers build an application first and manage the data it generates later.
@@ -9,6 +9,8 @@ Applications could be built "around" the data making it the center of a system d
 The framework is designed with developers in mind allowing easy integration with existing code base.
 
 ## Latest Release
+Currently, development is in progress to simplify api and make it closer to Collection API
+
 The most recent release is
 
 Requires Java version 12 or higher.
