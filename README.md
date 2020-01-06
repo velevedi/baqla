@@ -2,7 +2,7 @@
 
 Baqla allows splitting systems on functional and data parts enabling simultaneous evolution of both.
 
-In a traditional way developers build an application to manage data. Changing application and data structure at the same time is non trivial task which sometimes produces non recoverable changes. With Baqla it is possible to start calculations from any time in the past.
+In a traditional way developers build an application to manage data. Changing application and data structure at the same time is non trivial task, which sometimes produces non recoverable changes. With Baqla it is possible to start calculations from any time in the past.
 
 The development model changes the focus from an application to the data making it the center of a system, with applications built "around" the data.
 
@@ -20,7 +20,6 @@ Requires Java version 12 or higher.
 | Module | Licence | Description |
 |--------|---------|-------------|
 |__baqla__|Apache 2.0|API all framework implementations follow|
-|__baqla-simple__|Apache 2.0|Local JVM in memory implementation|
 |__baqla-jms__|Proprietary*|JMS based implementation|
 
 `*`Please contact us at velevedi@gmail.com if you want to learn more about licensing opportunities and support.
