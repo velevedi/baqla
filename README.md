@@ -2,8 +2,9 @@
 
 Baqla allows splitting systems on functional and data parts enabling simultaneous evolution of both.
 
-In a traditional way developers build an application to manage data. Changing application and data is non trivial task. With Baqla it is possible to evolve both sides of a system at the same time. The focus is changing from the application to the data.
-Applications could be built "around" the data making it the center of a system design and implementation.
+In a traditional way developers build an application to manage data. Changing application and data structure at the same time is non trivial task which sometimes produces non recoverable changes. With Baqla it is possible to start calculations from any time in the past.
+
+The development model changes the focus from an application to the data making it the center of a system, with applications built "around" the data.
 
 The framework is designed with developers in mind allowing easy integration with existing code base.
 
