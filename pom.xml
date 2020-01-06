@@ -26,8 +26,7 @@
     <packaging>pom</packaging>
 
     <description>
-        Baqla is a micro services orchestration framework that allows simultaneous evolution of the data as
-        well as software part of a system.
+        Baqla allows splitting systems on functional and data parts enabling simultaneous evolution of both.
     </description>
     <url>https://github.com/velevedi/baqla</url>
 
