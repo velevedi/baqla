@@ -31,10 +31,6 @@ public interface Task<V> {
      */
     String id();
 
-    int hashCode();
-
-    boolean equals(Object o);
-
     /**
      * Task is being called on the data present in a Log to produce result. The result of the calculation
      * will be put back into the Log for further processing.
