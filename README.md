@@ -32,7 +32,3 @@ Requires Java version 12 or higher.
 - [The Log: What every software engineer should know about real-time data's unifying abstraction](https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying)
 - [Knowledge In IT](http://velevedi.blogspot.co.uk/2016/11/knowledge-in-it.html)
 
-
-
-
-_Project development is still in progress._
