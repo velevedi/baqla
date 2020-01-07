@@ -36,6 +36,8 @@ public class GraphBuilder<V> {
     /**
      * Creates a builder for directed graph
      *
+     * @param name name of the graph
+     * @param <V> data type of the tasks that will perform calculations
      * @return graph builder for directed type graphs
      */
     public static <V> GraphBuilder<V> directedGraph(String name) {

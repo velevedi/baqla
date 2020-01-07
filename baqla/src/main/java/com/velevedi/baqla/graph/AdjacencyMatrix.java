@@ -179,16 +179,17 @@ public class AdjacencyMatrix {
      * A group of nodes can have a mix of of previous and next nodes. This method selects only next nodes from
      * a group provided as arguments. In other words, this method eliminates all previous tasks if next task
      * exists in the provided group.
-     * <p>Example:
+     *<pre>
+     * Example:
      * Let's imagine our graph has 5 nodes: a, b, c, d, e
-     * <code>
-     * Links:
-     *         a -> d
-     *         b -> d
-     *         c -> e
-     *         d -> e
      *
-     * List<String> nodes = Arrays.asList("a", "b", "c", "d", "e");
+     * Links:
+     *         a -&gt; d
+     *         b -&gt; d
+     *         c -&gt; e
+     *         d -&gt; e
+     *
+     * List&lt;String&gt; nodes = Arrays.asList("a", "b", "c", "d", "e");
      *
      * AdjacencyMatrix matrix = new AdjacencyMatrix(nodes.size())
      *         .link(nodes.indexOf("a"), nodes.indexOf("d"))
@@ -201,8 +202,7 @@ public class AdjacencyMatrix {
      * );
      *
      * frontLineNodes will have index of the "d" node
-     * </code>
-     * </p>
+     * </pre>
      *
      * @param nodeIndices node indices to filter
      * @return front line nodes

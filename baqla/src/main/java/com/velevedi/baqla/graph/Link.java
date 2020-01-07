@@ -18,7 +18,7 @@ import java.util.Objects;
 
 /**
  * Link represents association between a source task and a destination task.
- * The link is directional and operates using task ids (from -> to).
+ * The link is directional and operates using task ids (from -&gt; to).
  */
 public class Link {
     private String from;
