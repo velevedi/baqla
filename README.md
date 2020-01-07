@@ -1,5 +1,6 @@
 # Baqla: Data and Software Evolution
 
+Software evolution framework increases productivity of development teams and makes it easy to evolve software over time.
 Baqla allows splitting systems on functional and data parts enabling simultaneous evolution of both.
 
 In a traditional way developers build an application to manage data. Changing application and data structure at the same time is non trivial task, which sometimes produces non recoverable changes. With Baqla it is possible to start calculations from any time in the past.
