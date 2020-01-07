@@ -19,7 +19,7 @@
 
     <groupId>com.velevedi.baqla</groupId>
     <artifactId>baqla-parent</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5-SNAPSHOT</version>
 
     <name>baqla-parent</name>
 
@@ -51,7 +51,7 @@
         <url>https://github.com/velevedi/baqla</url>
         <connection>scm:git:git://github.com/velevedi/baqla.git</connection>
         <developerConnection>scm:git:git@github.com:velevedi/baqla.git</developerConnection>
-      <tag>baqla-parent-0.0.4</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <properties>
