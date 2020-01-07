@@ -181,12 +181,13 @@ public class AdjacencyMatrix {
      * exists in the provided group.
      * <p>Example:
      * Let's imagine our graph has 5 nodes: a, b, c, d, e
+     * <code>
      * Links:
      *         a -> d
      *         b -> d
      *         c -> e
      *         d -> e
-     * <code>
+     *
      * List<String> nodes = Arrays.asList("a", "b", "c", "d", "e");
      *
      * AdjacencyMatrix matrix = new AdjacencyMatrix(nodes.size())
