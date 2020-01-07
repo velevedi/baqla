@@ -150,8 +150,8 @@ class IncrementalExecutorTest {
 
     static class Multiply extends AbstractTask<Integer> {
 
-        public Multiply(String name) {
-            super(name);
+        public Multiply(String id) {
+            super(id);
         }
 
         @Override
@@ -166,8 +166,8 @@ class IncrementalExecutorTest {
 
     static class Sum extends AbstractTask<Integer> {
 
-        public Sum(String name) {
-            super(name);
+        public Sum(String id) {
+            super(id);
         }
 
         @Override
@@ -184,8 +184,8 @@ class IncrementalExecutorTest {
 
         private final Integer value;
 
-        public Constant(String name, Integer value) {
-            super(name);
+        public Constant(String id, Integer value) {
+            super(id);
             this.value = value;
         }
 

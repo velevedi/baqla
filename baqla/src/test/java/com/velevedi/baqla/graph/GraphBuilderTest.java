@@ -1,8 +1,10 @@
 package com.velevedi.baqla.graph;
 
+import com.velevedi.baqla.AbstractTask;
 import com.velevedi.baqla.Graph;
 import com.velevedi.baqla.Log;
 import com.velevedi.baqla.Task;
+import com.velevedi.baqla.annotation.TaskType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +25,57 @@ class GraphBuilderTest {
         TestTask d = new TestTask("d");
         TestTask e = new TestTask("e");
         TestTask f = new TestTask("f");
+        Graph<Integer> graph = GraphBuilder.<Integer>directedGraph("test")
+                .connect(a, d)
+                .connect(b, d)
+                .connect(c, e)
+                .connect(d, e)
+                .connect(d, f)
+                .build();
+
+        assertThat(graph, not(nullValue()));
+        assertThat(graph.name(), is("test"));
+        assertThat(graph.numberOfTasks(), is(6));
+    }
+
+    @Test
+    void buildingGraphUsingAnnotationsAndInnerClass() {
+        Task<Integer> a = new @TaskType(id = "a") AbstractTask<>() {
+            @Override
+            public <I extends Comparable<? super I>> Integer callOn(Set<Log.Entry<I, Integer>> entries) {
+                return 1;
+            }
+        };
+        Task<Integer> b = new @TaskType(id = "b") AbstractTask<>() {
+            @Override
+            public <I extends Comparable<? super I>> Integer callOn(Set<Log.Entry<I, Integer>> entries) {
+                return 2;
+            }
+        };
+        Task<Integer> c = new @TaskType(id = "c") AbstractTask<>() {
+            @Override
+            public <I extends Comparable<? super I>> Integer callOn(Set<Log.Entry<I, Integer>> entries) {
+                return 3;
+            }
+        };
+        Task<Integer> d = new @TaskType(id = "d") AbstractTask<>() {
+            @Override
+            public <I extends Comparable<? super I>> Integer callOn(Set<Log.Entry<I, Integer>> entries) {
+                return 4;
+            }
+        };
+        Task<Integer> e = new @TaskType(id = "e") AbstractTask<>() {
+            @Override
+            public <I extends Comparable<? super I>> Integer callOn(Set<Log.Entry<I, Integer>> entries) {
+                return 5;
+            }
+        };
+        Task<Integer> f = new @TaskType(id = "f") AbstractTask<>() {
+            @Override
+            public <I extends Comparable<? super I>> Integer callOn(Set<Log.Entry<I, Integer>> entries) {
+                return 6;
+            }
+        };
         Graph<Integer> graph = GraphBuilder.<Integer>directedGraph("test")
                 .connect(a, d)
                 .connect(b, d)

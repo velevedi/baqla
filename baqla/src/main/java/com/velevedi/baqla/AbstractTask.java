@@ -14,6 +14,10 @@
 
 package com.velevedi.baqla;
 
+import com.velevedi.baqla.annotation.TaskType;
+
+import java.lang.reflect.AnnotatedType;
+import java.lang.reflect.Constructor;
 import java.util.Objects;
 
 /**
@@ -24,6 +28,52 @@ import java.util.Objects;
 public abstract class AbstractTask<V> implements Task<V> {
 
     private final String id;
+
+    public AbstractTask() {
+        Class<?> clazz = this.getClass();
+
+        String localId = extractIdFromClass(clazz);
+
+        localId = localId == null ? extractIdFromSuperClass(clazz) : localId;
+
+        localId = localId == null ? extractIdFromClassConstructor(clazz) : localId;
+
+        if (localId != null) {
+            this.id = localId;
+        } else {
+            throw new IllegalStateException("Unable to initialize task [" + clazz.getName() + "]. Task id must be provided.");
+        }
+    }
+
+    private String extractIdFromClass(Class<?> clazz) {
+        TaskType taskTypeAnnotation = clazz.getAnnotation(TaskType.class);
+        if (taskTypeAnnotation != null) {
+            return taskTypeAnnotation.id();
+        }
+        return null;
+    }
+
+    private String extractIdFromSuperClass(Class<?> clazz) {
+        AnnotatedType annotatedSuperclass = clazz.getAnnotatedSuperclass();
+        if (annotatedSuperclass != null) {
+            TaskType taskTypeAnnotation = annotatedSuperclass.getAnnotation(TaskType.class);
+            if (taskTypeAnnotation != null) {
+                return taskTypeAnnotation.id();
+            }
+        }
+        return null;
+    }
+
+    private String extractIdFromClassConstructor(Class<?> clazz) {
+        Constructor<?>[] constructors = clazz.getConstructors();
+        for (Constructor<?> constructor : constructors) {
+            TaskType taskTypeAnnotation = constructor.getAnnotation(TaskType.class);
+            if (taskTypeAnnotation != null) {
+                return taskTypeAnnotation.id();
+            }
+        }
+        return null;
+    }
 
     public AbstractTask(String id) {
         if (id == null || id.isBlank()) {
