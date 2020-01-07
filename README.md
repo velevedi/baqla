@@ -20,7 +20,7 @@ Requires Java version 12 or higher.
 
 | Module | Licence | Description |
 |--------|---------|-------------|
-|__baqla__|Apache 2.0|API all framework implementations follow|
+|__baqla__|Apache 2.0|API and basic implemenation|
 |__baqla-jms__|Proprietary*|JMS based implementation|
 
 `*`Please contact us at velevedi@gmail.com if you want to learn more about licensing opportunities and support.
