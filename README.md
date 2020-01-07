@@ -1,5 +1,6 @@
 # Baqla: Data and Software Evolution
 
+Software evolution framework increases productivity of development teams and makes it easy to evolve software over time.
 Baqla allows splitting systems on functional and data parts enabling simultaneous evolution of both.
 
 In a traditional way developers build an application to manage data. Changing application and data structure at the same time is non trivial task, which sometimes produces non recoverable changes. With Baqla it is possible to start calculations from any time in the past.
@@ -19,7 +20,7 @@ Requires Java version 12 or higher.
 
 | Module | Licence | Description |
 |--------|---------|-------------|
-|__baqla__|Apache 2.0|API all framework implementations follow|
+|__baqla__|Apache 2.0|API and basic implemenation|
 |__baqla-jms__|Proprietary*|JMS based implementation|
 
 `*`Please contact us at velevedi@gmail.com if you want to learn more about licensing opportunities and support.
@@ -32,7 +33,3 @@ Requires Java version 12 or higher.
 - [The Log: What every software engineer should know about real-time data's unifying abstraction](https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying)
 - [Knowledge In IT](http://velevedi.blogspot.co.uk/2016/11/knowledge-in-it.html)
 
-
-
-
-_Project development is still in progress._
