@@ -10,11 +10,14 @@ The development model changes the focus from an application to the data making i
 The framework is designed with developers in mind allowing easy integration with existing code base.
 
 ## Latest Release
-Currently, development is in progress to simplify api and make it closer to Collection API
 
-The most recent release is
+The most recent release is 0.0.4
 
 Requires Java version 12 or higher.
+
+To add dependency on Baqla use the following
+
+
 
 ## Modules
 
