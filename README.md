@@ -11,9 +11,7 @@ The framework is designed with developers in mind allowing easy integration with
 
 ## Latest Release
 
-The most recent release is 0.0.4
-
-Requires Java version 12 or higher.
+The most recent release is 0.0.4 (requires Java 12+)
 
 To add dependency on Baqla use the following
 ```xml
