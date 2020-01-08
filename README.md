@@ -16,7 +16,13 @@ The most recent release is 0.0.4
 Requires Java version 12 or higher.
 
 To add dependency on Baqla use the following
-
+```xml
+<dependency>
+  <groupId>com.velevedi.baqla</groupId>
+  <artifactId>baqla</artifactId>
+  <version>0.0.4</version>
+</dependency>
+```
 
 
 ## Modules
