@@ -22,7 +22,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.function.Predicate;
 
-import static java.util.stream.Collectors.toSet;
+import static java.util.Comparator.reverseOrder;
+import static java.util.stream.Collectors.toList;
 
 /**
  * Log implementation which uses SortedSet as a data store to save entries.
@@ -56,7 +57,7 @@ public class SortedSetLog<I extends Comparable<? super I>, V> extends AbstractLo
         try {
             SortedSet<Entry<I, V>> newStore = store.getClass().getDeclaredConstructor().newInstance();
             newStore.addAll(
-                    store.stream().filter(filter).collect(toSet()))
+                    store.stream().sorted(reverseOrder()).filter(filter).collect(toList()))
             ;
             SortedSetLog<I, V> result = new SortedSetLog<>(indexFactory, newStore);
             result.parent = this.id;

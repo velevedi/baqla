@@ -23,6 +23,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.function.Predicate;
 
+import static java.util.Comparator.reverseOrder;
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -53,7 +54,7 @@ public class ListLog<V> extends AbstractLog<Integer, V> {
         try {
             List<Entry<Integer, V>> newStore = store.getClass().getDeclaredConstructor().newInstance();
             newStore.addAll(
-                    store.stream().filter(filter).collect(toList()))
+                    store.stream().sorted(reverseOrder()).filter(filter).collect(toList()))
             ;
             ListLog<V> result = new ListLog<>(newStore);
             result.parent = this.id;
