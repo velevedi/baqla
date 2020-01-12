@@ -20,6 +20,9 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.function.Predicate;
+
+import static java.util.stream.Collectors.toSet;
 
 /**
  * Log implementation which uses SortedSet as a data store to save entries.
@@ -49,10 +52,12 @@ public class SortedSetLog<I extends Comparable<? super I>, V> extends AbstractLo
 
     @Override
     @SuppressWarnings("unchecked")
-    public Log<I, V> fork() {
+    public Log<I, V> fork(Predicate<Entry<I, V>> filter) {
         try {
             SortedSet<Entry<I, V>> newStore = store.getClass().getDeclaredConstructor().newInstance();
-            newStore.addAll(store);
+            newStore.addAll(
+                    store.stream().filter(filter).collect(toSet()))
+            ;
             SortedSetLog<I, V> result = new SortedSetLog<>(indexFactory, newStore);
             result.parent = this.id;
             return result;

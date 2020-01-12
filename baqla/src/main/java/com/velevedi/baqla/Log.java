@@ -16,6 +16,7 @@ package com.velevedi.baqla;
 
 import java.io.Closeable;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -54,7 +55,17 @@ public interface Log<I extends Comparable<? super I>, V> extends Iterable<Entry<
      *
      * @return new instance of the Log
      */
-    Log<I, V> fork();
+    default Log<I, V> fork() {
+        return fork(entry -> true);
+    }
+
+    /**
+     * Forks current Log into a new one. Data from the parent Log will be copied into a child Log.
+     *
+     * @param filter filter that will be applied before copying entries to the new Log
+     * @return new instance of the Log
+     */
+    Log<I, V> fork(Predicate<Entry<I, V>> filter);
 
     /**
      * Number of entries in the Log

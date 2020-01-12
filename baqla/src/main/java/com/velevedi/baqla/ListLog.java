@@ -21,6 +21,9 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.function.Predicate;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * Log implementation which uses List as a data store to save entries.
@@ -46,10 +49,12 @@ public class ListLog<V> extends AbstractLog<Integer, V> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public Log<Integer, V> fork() {
+    public Log<Integer, V> fork(Predicate<Entry<Integer, V>> filter) {
         try {
             List<Entry<Integer, V>> newStore = store.getClass().getDeclaredConstructor().newInstance();
-            newStore.addAll(store);
+            newStore.addAll(
+                    store.stream().filter(filter).collect(toList()))
+            ;
             ListLog<V> result = new ListLog<>(newStore);
             result.parent = this.id;
             return result;
@@ -99,7 +104,7 @@ public class ListLog<V> extends AbstractLog<Integer, V> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ListLog<?> that = (ListLog<?>) o;
-        return id.equals(that.id) && store.equals(that.store) ;
+        return id.equals(that.id) && store.equals(that.store);
     }
 
     @Override
