@@ -88,6 +88,14 @@ public class ListLog<V> extends AbstractLog<Integer, V> {
     }
 
     @Override
+    public void addAll(Collection<Entry<Integer, V>> entries) {
+        if (entries == null) {
+            throw new IllegalArgumentException("Unable to add null entry");
+        }
+        store.addAll(entries);
+    }
+
+    @Override
     public Spliterator<Entry<Integer, V>> spliterator() {
         return store.spliterator();
     }

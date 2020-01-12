@@ -88,6 +88,14 @@ public class SortedSetLog<I extends Comparable<? super I>, V> extends AbstractLo
     }
 
     @Override
+    public void addAll(Collection<Entry<I, V>> entries) {
+        if (entries == null) {
+            throw new IllegalArgumentException("Unable to add null entry");
+        }
+        store.addAll(entries);
+    }
+
+    @Override
     public Spliterator<Entry<I, V>> spliterator() {
         return store.spliterator();
     }

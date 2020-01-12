@@ -21,6 +21,7 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import static com.velevedi.baqla.Log.Entry;
+import static java.util.Collections.singleton;
 
 /**
  * Data structure that allows adding new values only without ability to delete entries.
@@ -89,6 +90,12 @@ public interface Log<I extends Comparable<? super I>, V> extends Iterable<Entry<
     Iterator<Entry<I, V>> iterator();
 
     void add(String source, V value);
+
+    default void add(Entry<I, V> entry) {
+        addAll(singleton(entry));
+    }
+
+    void addAll(Collection<Entry<I, V>> entries);
 
     int hashCode();
 
