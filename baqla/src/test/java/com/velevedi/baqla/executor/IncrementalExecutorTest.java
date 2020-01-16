@@ -16,7 +16,7 @@ package com.velevedi.baqla.executor;
 
 import com.velevedi.baqla.*;
 import com.velevedi.baqla.graph.GraphBuilder;
-import com.velevedi.baqla.predicate.OneValuePerSource;
+import com.velevedi.baqla.util.GraphUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,9 +24,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-import static java.util.Comparator.reverseOrder;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
@@ -58,13 +56,35 @@ class IncrementalExecutorTest {
         executor.submit(graph, log);
         executor.submit(graph, log);
 
-        List<Log.Entry<Integer, Integer>> result = extractCalculationResults(log);
+        List<Log.Entry<Integer, Integer>> result = GraphUtils.extractResults(graph, log);
 
         assertThat(result.size(), is(1));
         assertThat(result.get(0).source(), is("multiply"));
         assertThat(result.get(0).value(), is(16));
     }
 
+    /**
+     * y = a + b
+     */
+    @Test
+    void documentationExample() {
+        Sum sum = new Sum("sum");
+        Graph<Integer> graph = GraphBuilder.<Integer>directedGraph("doc test")
+                .connect(new Constant("id1", 5), sum)
+                .connect(new Constant("id2", 3), sum)
+                .build();
+
+        Log<Integer, Integer> log = new ListLog<>(new ArrayList<>());
+
+        executor.submit(graph, log);
+        executor.submit(graph, log);
+
+        List<Log.Entry<Integer, Integer>> result = GraphUtils.extractResults(graph, log);
+
+        assertThat(result.size(), is(1));
+        assertThat(result.get(0).source(), is("sum"));
+        assertThat(result.get(0).value(), is(8));
+    }
 
     @Test
     void additionalInvocationsDoNotRun() {
@@ -83,7 +103,7 @@ class IncrementalExecutorTest {
         executor.submit(graph, log);
         // does not matter how many times
 
-        List<Log.Entry<Integer, Integer>> result = extractCalculationResults(log);
+        List<Log.Entry<Integer, Integer>> result = GraphUtils.extractResults(graph, log);
 
         assertThat(result.size(), is(1));
         assertThat(result.get(0).source(), is("multiply"));
@@ -109,13 +129,13 @@ class IncrementalExecutorTest {
         assertThat(forked.parent(), is(log.id()));
         assertThat(forked.id(), is(not(log.id())));
 
-        List<Log.Entry<Integer, Integer>> result1 = extractCalculationResults(log);
+        List<Log.Entry<Integer, Integer>> result1 = GraphUtils.extractResults(graph, log);
 
         assertThat(result1.size(), is(1));
         assertThat(result1.get(0).source(), is("multiply"));
         assertThat(result1.get(0).value(), is(16));
 
-        List<Log.Entry<Integer, Integer>> result2 = extractCalculationResults(log);
+        List<Log.Entry<Integer, Integer>> result2 = GraphUtils.extractResults(graph, log);
 
         assertThat(result2.size(), is(1));
         assertThat(result2.get(0).source(), is("multiply"));
@@ -134,18 +154,6 @@ class IncrementalExecutorTest {
 
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> executor.submit(null, null));
-    }
-
-    private List<Log.Entry<Integer, Integer>> extractCalculationResults(Log<Integer, Integer> log) {
-        Set<String> finalTasksNames = graph.finalTasks().stream()
-                .map(Task::id)
-                .collect(Collectors.toSet());
-
-        return log.stream()
-                .sorted(reverseOrder())
-                .filter(new OneValuePerSource<>())
-                .filter(e -> finalTasksNames.contains(e.source()))
-                .collect(Collectors.toList());
     }
 
     static class Multiply extends AbstractTask<Integer> {
