@@ -12,12 +12,19 @@ The framework is designed with developers in mind allowing easy integration with
 The most recent release is 0.0.5 (requires Java 12+)
 
 To add dependency on Baqla use the following
+
 ```xml
 <dependency>
   <groupId>com.velevedi.baqla</groupId>
   <artifactId>baqla</artifactId>
   <version>0.0.5</version>
 </dependency>
+```
+
+```json
+dependencies {
+    implementation 'com.velevedi.baqla:baqla:0.0.5'
+}
 ```
 
 
