@@ -89,12 +89,30 @@ public interface Log<I extends Comparable<? super I>, V> extends Iterable<Entry<
      */
     Iterator<Entry<I, V>> iterator();
 
+    /**
+     * Adds a value for a given source
+     *
+     * @param source the source which produced the value
+     * @param value  the value object to store in the Log
+     */
     void add(String source, V value);
 
+    /**
+     * Adds Entry object to the log
+     *
+     * @param entry entry to add
+     * @see Entry
+     */
     default void add(Entry<I, V> entry) {
         addAll(singleton(entry));
     }
 
+    /**
+     * Adds a collection of entries of entry objects
+     *
+     * @param entries entries to add
+     * @see Entry
+     */
     void addAll(Collection<Entry<I, V>> entries);
 
     int hashCode();
