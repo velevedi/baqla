@@ -21,7 +21,7 @@ To add dependency on Baqla use the following
 </dependency>
 ```
 
-```json
+```gradle
 dependencies {
     implementation 'com.velevedi.baqla:baqla:0.0.5'
 }
