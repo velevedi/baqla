@@ -16,7 +16,7 @@ To add dependency on Baqla use the following
 <dependency>
   <groupId>com.velevedi.baqla</groupId>
   <artifactId>baqla</artifactId>
-  <version>0.0.4</version>
+  <version>0.0.5</version>
 </dependency>
 ```
 
