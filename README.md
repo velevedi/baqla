@@ -40,7 +40,7 @@ dependencies {
 ## Links
 
 - [Concepts, User Guide and How To](https://github.com/velevedi/baqla/wiki)
-- [API](http://velevedi.com/baqla/0.0.4/apidocs/) 
+- [API](http://velevedi.com/baqla/0.0.5/apidocs/) 
 - [Issue/Request Tracker](https://github.com/velevedi/baqla/issues)
 - [The Log: What every software engineer should know about real-time data's unifying abstraction](https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying)
 - [Knowledge In IT](http://velevedi.blogspot.co.uk/2016/11/knowledge-in-it.html)
