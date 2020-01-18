@@ -104,6 +104,9 @@ public interface Log<I extends Comparable<? super I>, V> extends Iterable<Entry<
      * @see Entry
      */
     default void add(Entry<I, V> entry) {
+        if (entry == null) {
+            throw new IllegalArgumentException("Unable to add null entry");
+        }
         addAll(singleton(entry));
     }
 

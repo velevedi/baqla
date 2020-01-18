@@ -39,6 +39,19 @@ class GraphBuilderTest {
     }
 
     @Test
+    void comparingTasks() {
+        TestTask a = new TestTask("a");
+        TestTask b = new TestTask("b");
+
+        assertThat(a, is(not(b)));
+
+        TestTask aa = new TestTask("a");
+        TestTask ab = new TestTask("a");
+
+        assertThat(aa, is(ab));
+    }
+
+    @Test
     void buildingGraphUsingAnnotationsAndInnerClass() {
         Task<Integer> a = new @TaskType(id = "a") AbstractTask<>() {
             @Override

@@ -19,10 +19,7 @@ import com.velevedi.baqla.predicate.RefuseAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.Comparator.reverseOrder;
@@ -54,14 +51,19 @@ class ListLogTest {
         Log<Integer, String> log = new ListLog<>(new ArrayList<>());
 
         log.add("source", "value1");
-        log.add("source", "value2");
-        log.add("source", "value3");
+        log.add(new ComparableIdEntry<>("source", log.size() + 1, "value2"));
+        log.addAll(Collections.singleton(new ComparableIdEntry<>("source", log.size() + 1, "value3")));
 
         assertThat(log.isEmpty(), is(false));
         assertThat(log.size(), is(3));
         assertThat(log.iterator().hasNext(), is(true));
         // entries are ordered by the insertion order because of the List backing store
         assertThat(log.iterator().next().value(), is("value1"));
+
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> log.add(null));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> log.addAll(null));
     }
 
     @Test

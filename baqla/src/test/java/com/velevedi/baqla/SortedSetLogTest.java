@@ -52,17 +52,23 @@ class SortedSetLogTest {
 
     @Test
     void addingEntries() {
-        Log<Integer, String> log = new SortedSetLog<>(new IntegerIndexFactory(), new TreeSet<>());
+        IntegerIndexFactory indexFactory = new IntegerIndexFactory();
+        Log<Integer, String> log = new SortedSetLog<>(indexFactory, new TreeSet<>());
 
         log.add("source", "value1");
-        log.add("source", "value2");
-        log.add("source", "value3");
+        log.add(new ComparableIdEntry<>("source", indexFactory.nextIndex(), "value2"));
+        log.addAll(Collections.singleton(new ComparableIdEntry<>("source", indexFactory.nextIndex(), "value3")));
 
         assertThat(log.isEmpty(), is(false));
         assertThat(log.size(), is(3));
         assertThat(log.iterator().hasNext(), is(true));
         // entries are ordered by the insertion order because of the SortedSet backing store
         assertThat(log.iterator().next().value(), is("value1"));
+
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> log.add(null));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> log.addAll(null));
     }
 
     @Test
