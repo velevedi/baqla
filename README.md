@@ -5,7 +5,6 @@ Baqla allows splitting systems into functional and data parts enabling simultane
 
 In a traditional way developers build an application to manage data. With the Baqla development model the focus moves from an application to the data making it the center of a system, with applications built "around" the data.
 
-The framework is designed with developers in mind allowing easy integration with existing code base.
 
 ## Latest Release
 
